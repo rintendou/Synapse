@@ -15,8 +15,8 @@ MessageRoute.post('/', async (req: Request, res: Response) => {
     }
 });
 
-// GET message
-MessageRoute.get('/:conversationId',async (req: Request, res: Response) => {
+// GET messages
+MessageRoute.get('/:chatId',async (req: Request, res: Response) => {
     try {
         const allMessages = await MessageModel.find({
             chatId: req.params.chatId,
