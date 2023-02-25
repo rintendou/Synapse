@@ -35,7 +35,7 @@ app.use("/api/home", HomeRoute);
 app.use("/api/chat", ChatRoute);
 app.use("/api/messages", MessageRoute);
 
-mongoose.connect(process.env.MONGO_URL ?? "").then(() => {
+mongoose.connect(process.env.MONGO_URL!).then(() => {
 	console.log("Connected to MongoDB");
 	app.listen(PORT, () => {
 		console.log(`Listening on port ${PORT}`);
