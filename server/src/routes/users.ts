@@ -15,7 +15,5 @@ UserRoute.delete("/:userId", deleteUser);
 UserRoute.get("/:userId", getUser);
 
 // Add a user
-// *** to-do ***
 
 export default UserRoute;
-
