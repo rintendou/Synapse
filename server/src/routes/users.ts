@@ -54,7 +54,18 @@ UserRoute.get("/:userId", async (req: Request, res: Response) => {
 	}
 });
 
-// Add a user
+// Add a user WIP
+UserRoute.put("/:userId/add",async (req: Request, res: Response) => {
+	if (req.body.userId  !== req.params.userId) {
+		try {
+			
+		} catch (error) {
+			res.status(500).json(error);
+		}
+	} else {
+		res.status(403).json("Cannot add yourself");
+	}
+})
 
 export default UserRoute;
 
