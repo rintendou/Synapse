@@ -24,6 +24,11 @@ export const registerUser = async (req: Request, res: Response) => {
 }
 
 export const loginUser = async (req: Request, res: Response) => {
+	/* 
+	Search DB via the User Schema w/ unique email. 
+	Compare the password in the req to encrypted password in the DB.
+	*/
+	
 	try {
 		const user = await UserModel.findOne({
 			email: req.body.email,

@@ -3,6 +3,16 @@ import { Request, Response } from "express";
 import MessageModel from '../models/Message'
 
 export const createMessage = async (req: Request, res: Response) => {
+    /* 
+    Creates a new message with the MessageModel.
+    Message is creating using the entire body of the request.
+    The request contains the following keys: {
+        "chatId": ... , 
+        "sender": ... , 
+        "text": ... 
+    }
+    */
+
     const newMessage = new MessageModel(req.body);
 
     try {
