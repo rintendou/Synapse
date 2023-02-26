@@ -12,7 +12,7 @@ import UserRoute from "./routes/users";
 import AuthRoute from "./routes/auth";
 
 import ChatRoute from "./routes/chat";
-import HomeRoute from "./routes/home";
+// import HomeRoute from "./routes/home";
 import MessageRoute from "./routes/messages";
 
 const app = express();
@@ -31,7 +31,7 @@ app.use((req: Request, res: Response, next: Function) => {
 app.use("/api/users", UserRoute);
 app.use("/api/auth", AuthRoute);
 
-app.use("/api/home", HomeRoute);
+// app.use("/api/home", HomeRoute);
 app.use("/api/chat", ChatRoute);
 app.use("/api/messages", MessageRoute);
 
