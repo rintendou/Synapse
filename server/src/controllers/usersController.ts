@@ -9,7 +9,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
 	// Check if the request body userId and the request param userId is matching, or if the user is an admin.
 	if (req.body.userId === req.params.userId || req.body.admin) {
-		// If the body contains "password" key,
+		// If the body contains "password" key & check if the password matches the salt
 		if (req.body.password) {
 			try {
 				const salt = await bcrypt.genSalt(10);
@@ -41,7 +41,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 	console.log(req.body.userId);
 	console.log(req.params.userId);
 
-	// Check if the request body userId and the request param userId is matching, or if the user is an admin. 
+	// Check if the request body userId and the request param userId is matching, or if the user is an admin.
 	if (req.body.userId === req.params.userId || req.body.admin) {
 		try {
 			await UserModel.findByIdAndDelete(req.body.userId);
