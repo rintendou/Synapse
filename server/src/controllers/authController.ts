@@ -10,7 +10,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
     // Clean the username by removing whitespaces
     let { username } = req.body
-    username = username.trim()
+    username = username.replace(/\s+/g, "") // ' hello world ' -> 'helloworld'
 
     // Creating new User
     const user = await new UserModel({
