@@ -21,9 +21,14 @@ export const registerUser = async (req: Request, res: Response) => {
 	} catch (error) {
 		res.status(500).json(error);
 	}
-}
+};
 
 export const loginUser = async (req: Request, res: Response) => {
+	/* 
+	Search DB via the User Schema w/ unique email. 
+	Compare the password in the req to encrypted password in the DB.
+	*/
+
 	try {
 		const user = await UserModel.findOne({
 			email: req.body.email,
@@ -39,4 +44,4 @@ export const loginUser = async (req: Request, res: Response) => {
 	} catch (error) {
 		return res.status(500).json(error);
 	}
-}
+};
