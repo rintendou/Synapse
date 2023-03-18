@@ -1,7 +1,11 @@
 import React from "react"
 
-const Body = () => {
-  return <div className="min-h-screen">Body</div>
+type Props = {
+  children: React.ReactNode
+}
+
+const Body = ({ children }: Props) => {
+  return <div className="min-h-screen flex flex-col space-y-4">{children}</div>
 }
 
 export default Body
