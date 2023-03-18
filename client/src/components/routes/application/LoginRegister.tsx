@@ -11,12 +11,12 @@ const LoginRegister = () => {
           <RouterLink
             to="/login"
             routerLinkText="Login"
-            twClasses="w-32 font-bold text-lg text-primary bg-secondary rounded-md py-2"
+            twClasses="w-32 font-bold text-lg text-primary bg-secondary rounded-md py-2 hover:scale-105 duration-200 ease-in-out"
           />
           <RouterLink
             to="/register"
             routerLinkText="Register"
-            twClasses="w-32 font-bold text-lg text-secondary bg-primary rounded-md py-2 border-2 border-secondary"
+            twClasses="w-32 font-bold text-lg text-secondary bg-primary rounded-md py-2 border-2 border-secondary hover:scale-105 duration-200 ease-in-out"
           />
         </div>
       </Overview>
