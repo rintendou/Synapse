@@ -1,11 +1,11 @@
 const Headline = () => {
   return (
-    <div className="flex flex-col text-center md:text-left md:flex-row items-center justify-center gap-16 bg-tertiary text-primary cursor-pointer group">
+    <div className="flex flex-col text-center md:text-left md:flex-row items-center justify-center gap-16 bg-secondary text-primary cursor-pointer group">
       <h1 className="text-4xl md:text-6xl font-bold tracking-wide max-w-[45%]">
         a minimalist and performant chat application.
       </h1>
       <svg
-        className="h-96 w-96 animate-pulse duration-200 hover:scale-105"
+        className="h-96 w-96 animate-pulse duration-200 group-hover:scale-105"
         id="eZ2YbXtvCeL1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
