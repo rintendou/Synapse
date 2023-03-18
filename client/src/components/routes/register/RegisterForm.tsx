@@ -22,9 +22,13 @@ const RegisterForm = () => {
       const emailAddress = emailAddressRef.current!.value
       const password = passwordRef.current!.value
 
-      const response = await fetch("http://localhost:5173/api/auth/register", {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
-        body: JSON.stringify({ fullName, emailAddress, password }),
+        body: JSON.stringify({
+          username: fullName,
+          email: emailAddress,
+          password,
+        }),
         headers: { "Content-Type": "application/json" },
       })
       const data = await response.json()

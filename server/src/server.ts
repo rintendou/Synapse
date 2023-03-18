@@ -17,7 +17,7 @@ import ChatRoute from "./routes/chat"
 import MessageRoute from "./routes/messages"
 
 const app = express()
-const PORT = 5173
+const PORT = 5000
 
 // Middleware
 app.use(express.json()) // This allows for requests to be accessed, turns req -> JSON object (body can be accessed &)
