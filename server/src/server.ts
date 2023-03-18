@@ -4,6 +4,7 @@ import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import morgan from "morgan";
+import cors from "cors"
 
 mongoose.set("strictQuery", false);
 
@@ -22,6 +23,7 @@ const PORT = 5173;
 app.use(express.json()); // This allows for requests to be accessed, turns req -> JSON object (body can be accessed &)
 app.use(helmet());
 app.use(morgan("common"));
+app.use(cors())
 
 app.use((req: Request, res: Response, next: Function) => {
 	console.log(req.path, req.method);
