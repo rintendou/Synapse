@@ -5,7 +5,11 @@ type Props = {
 }
 
 const Body = ({ children }: Props) => {
-  return <div className="min-h-screen flex flex-col space-y-4">{children}</div>
+  return (
+    <div className="min-h-screen flex flex-col space-y-4 h-full">
+      {children}
+    </div>
+  )
 }
 
 export default Body
