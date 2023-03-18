@@ -7,7 +7,7 @@ const LoginForm = () => {
 
   return (
     <Card twClasses="w-fit mx-auto p-20 border-4 border-secondary space-y-20">
-      <h1 className="text-2xl font-bold text-center">Login</h1>
+      <h1 className="text-4xl font-bold text-center">Login</h1>
       <div className="flex flex-col">
         <StyledInput
           name="Email Address"

@@ -1,5 +1,6 @@
 import Collaborators from "./Collaborators"
 import Headline from "./Headline"
+import LetsGetStarted from "./LetsGetStarted"
 import SubHeadline from "./subheadline/SubHeadline"
 
 const LandingPage = () => {
@@ -8,6 +9,7 @@ const LandingPage = () => {
       <Headline />
       <SubHeadline />
       <Collaborators />
+      <LetsGetStarted />
     </div>
   )
 }

@@ -7,7 +7,7 @@ const RegisterForm = () => {
 
   return (
     <Card twClasses="w-fit mx-auto p-20 border-4 border-secondary space-y-20">
-      <h1 className="text-2xl font-bold text-center">Register</h1>
+      <h1 className="text-4xl font-bold text-center">Register</h1>
       <div className="flex flex-col">
         <StyledInput name="Full Name" type="text" placeholder="Full Name" />
         <StyledInput
