@@ -1,25 +1,27 @@
 import Card from "../../ui/Card"
-import Overview from "../../ui/Overview"
-import RouterLink from "../../ui/RouterLink"
+import StyledInput from "../../ui/StyledInput"
+import StyledButton from "../../ui/StyledButton"
 
 const RegisterForm = () => {
+  const registerUserHandler = () => {}
+
   return (
-    <Card twClasses="w-fit mx-auto p-20 border-4 border-secondary ">
-      <Overview twClasses="space-y-10">
-        <h1 className="text-5xl font-bold">Do you have an account with us?</h1>
-        <div className="flex flex-row gap-10 justify-center">
-          <RouterLink
-            to="/login"
-            routerLinkText="Login"
-            twClasses="w-32 font-bold text-lg text-primary bg-secondary rounded-md py-2"
-          />
-          <RouterLink
-            to="/register"
-            routerLinkText="Register"
-            twClasses="w-32 font-bold text-lg text-secondary bg-primary rounded-md py-2 border-2 border-secondary"
-          />
-        </div>
-      </Overview>
+    <Card twClasses="w-fit mx-auto p-20 border-4 border-secondary space-y-20">
+      <h1 className="text-2xl font-bold text-center">Register</h1>
+      <div className="flex flex-col">
+        <StyledInput name="Full Name" type="text" placeholder="Full Name" />
+        <StyledInput
+          name="Email Address"
+          type="email"
+          placeholder="Email Address"
+        />
+        <StyledInput name="Password" type="password" placeholder="Password" />
+      </div>
+      <StyledButton
+        buttonText="Register"
+        twClasses="w-full py-3"
+        onClick={registerUserHandler}
+      />
     </Card>
   )
 }

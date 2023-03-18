@@ -1,7 +1,7 @@
 type Props = {
   onClick: () => void
   buttonText: string
-  intent: "primary" | "secondary"
+  intent?: "primary" | "secondary"
   twClasses?: string
 }
 
