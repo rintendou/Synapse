@@ -7,7 +7,7 @@ const Header = () => {
       <nav className="hidden md:flex flex-row gap-4">
         <RouterLink to="/" routerLinkText="Home" />
         <RouterLink to="/app" routerLinkText="App" />
-        <RouterLink to="/test" routerLinkText="Test" />
+        <RouterLink to="/dev" routerLinkText="Dev" />
       </nav>
     </header>
   )

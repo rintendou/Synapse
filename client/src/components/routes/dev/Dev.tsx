@@ -5,9 +5,9 @@ import StyledButton from "../../ui/StyledButton"
 
 const Dev = () => {
   return (
-    <div className="space-y-20">
+    <div className="space-y-20 max-w-sm mx-auto">
       <Overview>
-        <h1 className="text-6xl font-bold">
+        <h1 className="text-3xl font-bold">
           This route is for dev purposes only. This route shows the ui elements
           and an overview of their functionalities
         </h1>
