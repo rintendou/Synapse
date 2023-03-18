@@ -10,6 +10,7 @@ import PageNotFound from "./components/routes/page-not-found/PageNotFound"
 import Body from "./components/layout/body/Body"
 import Footer from "./components/layout/footer/Footer"
 import Header from "./components/layout/header/Header"
+import LoginRegister from "./components/routes/application/LoginRegister"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/app" element={<Application />} />
+          <Route path="/login-register" element={<LoginRegister />} />
           <Route path="/dev" element={<Dev />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
