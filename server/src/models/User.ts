@@ -29,7 +29,7 @@ const UserSchema = new Schema(
 			type: String,
 			default: "",
 		},
-		friends: {
+		relationships: {
 			type: Array,
 			default: []
 		},
