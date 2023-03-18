@@ -1,5 +1,11 @@
+import Headline from "./Headline"
+
 const LandingPage = () => {
-  return <div>This is the Landing Page</div>
+  return (
+    <div>
+      <Headline />
+    </div>
+  )
 }
 
 export default LandingPage
