@@ -1,11 +1,9 @@
-import RouterLink from "./components/ui/RouterLink"
+import Header from "./components/layout/header/Header"
 
 function App() {
   return (
-    <div className="bg-primary">
-      <RouterLink to="/" routerLinkText="Home"></RouterLink>
-      <RouterLink to="/test" routerLinkText="Home"></RouterLink>
-      <RouterLink to="/anotherroute" routerLinkText="Home"></RouterLink>
+    <div className="min-h-screen bg-primary text-secondary">
+      <Header />
     </div>
   )
 }
