@@ -14,6 +14,7 @@ const LoginRegister = () => {
             onClick={() => {
               console.log("Hello")
             }}
+            twClasses="w-32 font-bold text-lg"
           />
           <StyledButton
             buttonText="Register"
@@ -21,6 +22,7 @@ const LoginRegister = () => {
             onClick={() => {
               console.log("Hello")
             }}
+            twClasses="w-32 font-bold text-lg"
           />
         </div>
       </Overview>
