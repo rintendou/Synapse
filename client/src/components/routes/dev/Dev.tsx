@@ -2,6 +2,7 @@ import Card from "../../ui/Card"
 import Overview from "../../ui/Overview"
 import RouterLink from "../../ui/RouterLink"
 import StyledButton from "../../ui/StyledButton"
+import StyledInput from "../../ui/StyledInput"
 
 const Dev = () => {
   return (
@@ -35,6 +36,8 @@ const Dev = () => {
           intent="secondary"
         />
       </div>
+
+      <StyledInput name="Styled Input" type="text" placeholder="Styled Input" />
     </div>
   )
 }
