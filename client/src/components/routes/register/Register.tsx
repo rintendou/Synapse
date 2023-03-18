@@ -1,7 +1,11 @@
-import React from "react"
+import RegisterForm from "./RegisterForm"
 
 const Register = () => {
-  return <div>Register</div>
+  return (
+    <div className="min-h-screen flex flex-col justify-center">
+      <RegisterForm />
+    </div>
+  )
 }
 
 export default Register
