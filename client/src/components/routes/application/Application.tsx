@@ -1,7 +1,5 @@
-import React from "react"
-
 const Application = () => {
-  return <div>Application</div>
+  return <div>This is the main application</div>
 }
 
 export default Application
