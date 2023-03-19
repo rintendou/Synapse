@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Card from "../../ui/Card"
 import Error from "../../ui/Error"
 import StyledButton from "../../ui/StyledButton"
@@ -16,6 +16,10 @@ const LoginForm = ({ didRegisterSuccessfully, successMessage }: Props) => {
   const emailAddressRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
 
+  // focus on the first input on component mount
+  useEffect(() => {
+    emailAddressRef.current!.focus()
+  }, [])
   // Keep track of error
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
