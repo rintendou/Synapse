@@ -3,17 +3,40 @@ import UserModel from "../models/User"
 import bcrypt from "bcrypt"
 
 export const registerUser = async (req: Request, res: Response) => {
+  // destructure the payload attached to the body
+  let { username } = req.body // username will be cleaned by removing whitespaces thats why its declared as a let variable
+  const { email, password } = req.body
+
+  if (!req.body.name || !req.body.email || !req.body.password) {
+    return res.status(400).json({
+      message: "name, email, and password properties are required!",
+      data: null,
+      ok: false,
+    })
+  }
+
   try {
     // Hashing password
     const salt = await bcrypt.genSalt()
-    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+    const hashedPassword = await bcrypt.hash(password, salt)
 
     // Clean the username by removing whitespaces
-    let { username } = req.body
-    username = username.replace(/\s+/g, "") // ' hello world ' -> 'helloworld'
+    username = username.replace(/\s+/g, "") // '  hello world ' -> 'helloworld'
+
+    // Check if the username or the email already exists in the db
+    const existingUser = await UserModel.findOne({
+      $or: [{ username: username }, { email: email }],
+    })
+    if (existingUser) {
+      const message =
+        existingUser.username === username
+          ? "Username already exists!"
+          : "Email already exists!"
+      return res.status(400).json({ message, data: null, ok: false })
+    }
 
     // Creating new User
-    const user = await new UserModel({
+    const user = new UserModel({
       username: username,
       email: req.body.email,
       password: hashedPassword,
