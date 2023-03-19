@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import Card from "../../ui/Card"
 import Error from "../../ui/Error"
@@ -14,6 +15,10 @@ const RegisterForm = () => {
 
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
+
+  // navigate object to redirect to another page while passing props as well
+  // when a successful registration happens, we redirect to the login page
+  const navigate = useNavigate()
 
   // focus on the first input on component mount
   useEffect(() => {
@@ -47,6 +52,9 @@ const RegisterForm = () => {
       }
 
       setIsError(false)
+      navigate("/login", {
+        state: { didRegisterSuccessfully: true, successMessage: data.message },
+      })
       console.log(data)
     }
     registerUser()
