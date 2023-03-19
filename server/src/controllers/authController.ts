@@ -7,6 +7,7 @@ export const registerUser = async (req: Request, res: Response) => {
   let { username } = req.body // username will be cleaned by removing whitespaces thats why its declared as a let variable
   const { email, password } = req.body
 
+  // Check if appropriate payload is attached to the body
   if (!req.body.name || !req.body.email || !req.body.password) {
     return res.status(400).json({
       message: "name, email, and password properties are required!",
