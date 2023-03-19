@@ -4,6 +4,7 @@ import Overview from "../../ui/Overview"
 import RouterLink from "../../ui/RouterLink"
 import StyledButton from "../../ui/StyledButton"
 import StyledInput from "../../ui/StyledInput"
+import Success from "../../ui/Success"
 
 const Dev = () => {
   return (
@@ -40,7 +41,9 @@ const Dev = () => {
 
       <StyledInput name="Styled Input" type="text" placeholder="Styled Input" />
 
-      <Error error="Error component" />
+      <Error errorMessage="Error component" />
+
+      <Success successMessage="Success component" />
     </div>
   )
 }
