@@ -1,4 +1,5 @@
 import Card from "../../ui/Card"
+import Error from "../../ui/Error"
 import Overview from "../../ui/Overview"
 import RouterLink from "../../ui/RouterLink"
 import StyledButton from "../../ui/StyledButton"
@@ -38,6 +39,8 @@ const Dev = () => {
       </div>
 
       <StyledInput name="Styled Input" type="text" placeholder="Styled Input" />
+
+      <Error error="Error component" />
     </div>
   )
 }
