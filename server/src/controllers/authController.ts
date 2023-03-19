@@ -67,7 +67,9 @@ export const loginUser = async (req: Request, res: Response) => {
     })
 
     if (!user)
-      res.status(400).json({ message: "User not found", data: null, ok: false })
+      return res
+        .status(400)
+        .json({ message: "User not found", data: null, ok: false })
 
     const validPassword = await bcrypt.compare(
       req.body.password,
@@ -75,7 +77,9 @@ export const loginUser = async (req: Request, res: Response) => {
     )
 
     if (!validPassword)
-      res.status(400).json({ message: "Wrong password", data: null, ok: false })
+      return res
+        .status(400)
+        .json({ message: "Wrong password", data: null, ok: false })
 
     return res
       .status(200)
