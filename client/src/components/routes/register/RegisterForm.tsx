@@ -16,6 +16,9 @@ const RegisterForm = () => {
     fullNameRef.current!.focus()
   }, [])
 
+  // send post request to api endpoint /api/auth/register by calling the
+  // the endpoint and backend_server_port number: 5000. Payload is passed
+  // by attaching data to the body object.
   const registerUserHandler = () => {
     const registerUser = async () => {
       const fullName = fullNameRef.current!.value
