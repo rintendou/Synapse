@@ -4,8 +4,6 @@ import Card from "../../ui/Card"
 import StyledButton from "../../ui/StyledButton"
 import StyledInputRef from "../../ui/StyledInputRef"
 
-require("dotenv").config({ path: '../.env'}) // BROKEN IDK WHY
-
 const RegisterForm = () => {
   // I opted to use the useRef hook instead of useState to prevent
   // unnecessary re-renders of this component per each character typed
@@ -18,13 +16,16 @@ const RegisterForm = () => {
     fullNameRef.current!.focus()
   }, [])
 
+  // send post request to api endpoint /api/auth/register by calling the
+  // the endpoint and backend_server_port number: 5000. Payload is passed
+  // by attaching data to the body object.
   const registerUserHandler = () => {
     const registerUser = async () => {
       const fullName = fullNameRef.current!.value
       const emailAddress = emailAddressRef.current!.value
       const password = passwordRef.current!.value
 
-      const response = await fetch(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/api/auth/register`, {
+      const response = await fetch(`http://localhost:5000/api/auth/register`, {
         method: "POST",
         body: JSON.stringify({
           username: fullName,
