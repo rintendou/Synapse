@@ -8,9 +8,9 @@ export const registerUser = async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   // Check if appropriate payload is attached to the body
-  if (!req.body.name || !req.body.email || !req.body.password) {
+  if (!req.body.username || !req.body.email || !req.body.password) {
     return res.status(400).json({
-      message: "name, email, and password properties are required!",
+      message: "username, email, and password properties are required!",
       data: null,
       ok: false,
     })
