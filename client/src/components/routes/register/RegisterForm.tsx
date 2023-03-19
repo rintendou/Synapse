@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import Card from "../../ui/Card"
+import Error from "../../ui/Error"
 import StyledButton from "../../ui/StyledButton"
 import StyledInputRef from "../../ui/StyledInputRef"
 
@@ -10,6 +11,9 @@ const RegisterForm = () => {
   const fullNameRef = useRef<HTMLInputElement>(null)
   const emailAddressRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
+
+  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
   // focus on the first input on component mount
   useEffect(() => {
@@ -35,6 +39,14 @@ const RegisterForm = () => {
         headers: { "Content-Type": "application/json" },
       })
       const data = await response.json()
+
+      if (!data.ok) {
+        setIsError(true)
+        setErrorMessage(data.message)
+        return
+      }
+
+      setIsError(false)
       console.log(data)
     }
     registerUser()
@@ -68,6 +80,7 @@ const RegisterForm = () => {
         twClasses="w-full py-3"
         onClick={registerUserHandler}
       />
+      {isError && <Error errorMessage={errorMessage} />}
     </Card>
   )
 }
