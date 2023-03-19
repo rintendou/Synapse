@@ -1,6 +1,8 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import Card from "../../ui/Card"
+import Error from "../../ui/Error"
 import StyledButton from "../../ui/StyledButton"
 import StyledInputRef from "../../ui/StyledInputRef"
 
@@ -10,6 +12,13 @@ const RegisterForm = () => {
   const fullNameRef = useRef<HTMLInputElement>(null)
   const emailAddressRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
+
+  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
+
+  // navigate object to redirect to another page while passing props as well
+  // when a successful registration happens, we redirect to the login page
+  const navigate = useNavigate()
 
   // focus on the first input on component mount
   useEffect(() => {
@@ -35,13 +44,24 @@ const RegisterForm = () => {
         headers: { "Content-Type": "application/json" },
       })
       const data = await response.json()
+
+      if (!data.ok) {
+        setIsError(true)
+        setErrorMessage(data.message)
+        return
+      }
+
+      setIsError(false)
+      navigate("/login", {
+        state: { didRegisterSuccessfully: true, successMessage: data.message },
+      })
       console.log(data)
     }
     registerUser()
   }
 
   return (
-    <Card twClasses="w-fit mx-auto p-20 border-4 border-secondary space-y-20">
+    <Card twClasses="w-[45rem] mx-auto p-20 border-4 border-secondary space-y-16">
       <h1 className="text-4xl font-bold text-center">Register</h1>
       <div className="flex flex-col">
         <StyledInputRef
@@ -68,6 +88,7 @@ const RegisterForm = () => {
         twClasses="w-full py-3"
         onClick={registerUserHandler}
       />
+      {isError && <Error errorMessage={errorMessage} />}
     </Card>
   )
 }
