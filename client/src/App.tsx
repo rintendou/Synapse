@@ -1,32 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom"
+
+// Routes
+import Application from "./components/routes/application/Application"
+import Dev from "./components/routes/dev/Dev"
+import LandingPage from "./components/routes/landing-page/LandingPage"
+import PageNotFound from "./components/routes/page-not-found/PageNotFound"
+import Login from "./components/routes/login/Login"
+import Register from "./components/routes/register/Register"
+
+// Components
+import Body from "./components/layout/body/Body"
+import Footer from "./components/layout/footer/Footer"
+import Header from "./components/layout/header/Header"
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="bg-primary text-secondary">
+      <Header />
+      <Body>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/app" element={<Application />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dev" element={<Dev />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Body>
+      <Footer />
     </div>
   )
 }
