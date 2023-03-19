@@ -1,4 +1,4 @@
-require("dotenv").config({ path: '../.env'})
+require("dotenv").config({ path: "../.env" })
 
 import express, { Request, Response } from "express"
 import mongoose from "mongoose"
@@ -17,6 +17,7 @@ import ChatRoute from "./routes/chat"
 import MessageRoute from "./routes/messages"
 
 const app = express()
+const PORT = process.env.BACKEND_SERVER_PORT
 
 // Middleware
 app.use(express.json()) // This allows for requests to be accessed, turns req -> JSON object (body can be accessed &)
@@ -43,11 +44,9 @@ app.use("/api/auth", AuthRoute)
 app.use("/api/chat", ChatRoute)
 app.use("/api/messages", MessageRoute)
 
-
-
 mongoose.connect(process.env.MONGO_URL!).then(() => {
   console.log("Connected to MongoDB")
-  app.listen(process.env.SERVER_PORT, () => {
-    console.log(`Listening on port ${process.env.SERVER_PORT}`)
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
   })
 })
