@@ -6,17 +6,19 @@ import helmet from "helmet"
 import morgan from "morgan"
 import cors from "cors"
 
-mongoose.set("strictQuery", false)
-
-// Declaring all routes, exported as a module and imported here
+// Import all routes
 import UserRoute from "./routes/users"
 import AuthRoute from "./routes/auth"
-
+import FriendRoute from "./routes/friends"
 import ChatRoute from "./routes/chat"
-// import HomeRoute from "./routes/home";
 import MessageRoute from "./routes/messages"
 
+mongoose.set("strictQuery", false)
+
+// Define the server
 const app = express()
+
+// Environment Variables
 const PORT = process.env.BACKEND_SERVER_PORT
 
 // Middleware
@@ -31,18 +33,17 @@ app.use(
     credentials: true,
   })
 )
-
 app.use((req: Request, res: Response, next: Function) => {
   console.log(req.path, req.method)
   next()
 })
 
+// Declare Routes
 app.use("/api/users", UserRoute)
 app.use("/api/auth", AuthRoute)
-
-// app.use("/api/home", HomeRoute);
 app.use("/api/chat", ChatRoute)
 app.use("/api/messages", MessageRoute)
+app.use("/api/friends", FriendRoute)
 
 mongoose.connect(process.env.MONGO_URL!).then(() => {
   console.log("Connected to MongoDB")
