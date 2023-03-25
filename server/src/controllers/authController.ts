@@ -4,8 +4,7 @@ import bcrypt from "bcrypt"
 
 export const registerUser = async (req: Request, res: Response) => {
   // destructure the payload attached to the body
-  let { username } = req.body // username will be cleaned by removing whitespaces thats why its declared as a let variable
-  const { email, password } = req.body
+  const { username, email, password } = req.body
 
   // Check if appropriate payload is attached to the body
   if (!req.body.username || !req.body.email || !req.body.password) {
@@ -22,15 +21,15 @@ export const registerUser = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     // Clean the username by removing whitespaces
-    username = username.replace(/\s+/g, "") // '  hello world ' -> 'helloworld'
+    const cleanedUsername = username.replace(/\s+/g, "") // '  hello world ' -> 'helloworld'
 
     // Check if the username or the email already exists in the db
     const existingUser = await UserModel.findOne({
-      $or: [{ username: username }, { email: email }],
+      $or: [{ username: cleanedUsername }, { email: email }],
     })
     if (existingUser) {
       const message =
-        existingUser.username === username
+        existingUser.username === cleanedUsername
           ? "Username already exists!"
           : "Email already exists!"
       return res.status(400).json({ message, data: null, ok: false })
@@ -38,7 +37,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
     // Creating new User
     const user = new UserModel({
-      username: username,
+      username: cleanedUsername,
       email: req.body.email,
       password: hashedPassword,
     })
