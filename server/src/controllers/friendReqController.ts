@@ -17,7 +17,7 @@ export const addFriend = async (req: Request, res: Response) => {
 
   try {
     const friend = await UserModel.findOne({ username: friendUsername })
-    const user = await UserModel.findOne({ username: friendUsername })
+    const user = await UserModel.findOne({ username: username })
 
     // Check if friend or user objects exist in the db
     if (!friend || !user) {
@@ -29,7 +29,7 @@ export const addFriend = async (req: Request, res: Response) => {
     const relationships = user.relationships
 
     // Check if user already has a friend-relationship with the friend
-    // if a friend's username matches in the relationships arr, return true. Otherwise, return false.
+    // if a friend's username has a match in the relationships arr, return true. Otherwise, return false.
     const friendAlreadyExists = relationships.some(
       (f) => f.username === friend.username
     )
@@ -43,9 +43,10 @@ export const addFriend = async (req: Request, res: Response) => {
     relationships.push(friend)
     user.relationships = relationships
     await user.save()
+
     res
       .status(200)
-      .json({ message: "Friend successfully added!", data: friend, ok: false })
+      .json({ message: "Friend successfully added!", data: friend, ok: true })
   } catch (error) {
     return res.status(500).json({ message: error, data: null, ok: false })
   }
@@ -58,8 +59,57 @@ export const removeFriend = async (req: Request, res: Response) => {
   }
 }
 
-export const blockFriend = async (req: Request, res: Response) => {
+export const blockUser = async (req: Request, res: Response) => {
+  // Destucture the payload attached to the body and params
+  const { usernameToBeBlocked } = req.body
+  const { username } = req.params
+
+  // Check if payload data is complete
+  if (!usernameToBeBlocked || !username) {
+    return res.status(400).json({
+      message: "usernameToBeBlocked property and username params are required!",
+      data: null,
+      ok: false,
+    })
+  }
+
   try {
+    const userToBeBlocked = await UserModel.findOne({
+      username: usernameToBeBlocked,
+    })
+    const user = await UserModel.findOne({ username: username })
+
+    // Check if friend or user objects exist in the db
+    if (!userToBeBlocked || !user) {
+      return res
+        .status(404)
+        .json({ message: "User does not exist!", data: null, ok: false })
+    }
+
+    const blocked = user.blocked
+
+    // Check if user already has blocked the userToBeBlocked
+    // if a userToBeBlocked's username has a match in the blocked arr, return true. Otherwise, return false.
+    const userAlreadyBlocked = blocked.some(
+      (u) => u.username === userToBeBlocked.username
+    )
+    if (userAlreadyBlocked) {
+      return res.status(404).json({
+        message: "Friend is already blocked!",
+        data: userToBeBlocked,
+        ok: false,
+      })
+    }
+
+    blocked.push(userToBeBlocked)
+    user.blocked = blocked
+    await user.save()
+
+    res.status(200).json({
+      message: "User successfully blocked!",
+      data: userToBeBlocked,
+      ok: true,
+    })
   } catch (error) {
     return res.status(500).json({ message: error, data: null, ok: false })
   }
