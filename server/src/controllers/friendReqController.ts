@@ -234,7 +234,7 @@ export const unblockUser = async (req: Request, res: Response) => {
 
     const blocked = user.blocked
 
-    // Check if user already has unblocked the userToBeUnblocked.
+    // Check if user has blocked the userToBeUnblocked.
     // if a userToBeUnblocked's username has a match in the blocked arr, return true. Otherwise, return false.
     const userAlreadyBlocked = blocked.some(
       (u) => u.username === userToBeUnblocked.username
