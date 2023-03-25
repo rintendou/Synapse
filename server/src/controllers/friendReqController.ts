@@ -53,7 +53,59 @@ export const addFriend = async (req: Request, res: Response) => {
 }
 
 export const removeFriend = async (req: Request, res: Response) => {
+  // Destucture the payload attached to the body and params
+  const { friendUsername } = req.body
+  const { username } = req.params
+
+  // Check if payload data is complete
+  if (!friendUsername || !username) {
+    return res.status(400).json({
+      message: "friendUsername property and username params are required!",
+      data: null,
+      ok: false,
+    })
+  }
+
   try {
+    const friendToBeRemoved = await UserModel.findOne({
+      username: friendUsername,
+    })
+    const user = await UserModel.findOne({ username: username })
+
+    // Check if friend or user objects exist in the db
+    if (!friendToBeRemoved || !user) {
+      return res
+        .status(404)
+        .json({ message: "User does not exist!", data: null, ok: false })
+    }
+
+    const relationships = user.relationships
+
+    // Check if user already does not have a relationship with the friend.
+    // if a friend's username has a match in the relationships arr, return true. Otherwise, return false.
+    const areFriends = relationships.some(
+      (f) => f.username === friendToBeRemoved.username
+    )
+    if (!areFriends) {
+      return res.status(404).json({
+        message: "Users are not already friends!",
+        data: friendToBeRemoved,
+        ok: false,
+      })
+    }
+
+    // Remove friend from user's relationships by filtering the friend's username
+    const filteredRelationships = relationships.filter(
+      (f) => f.username !== friendToBeRemoved.username
+    )
+    user.relationships = filteredRelationships
+    await user.save()
+
+    res.status(200).json({
+      message: "Friend successfully blocked",
+      data: friendToBeRemoved,
+      ok: true,
+    })
   } catch (error) {
     return res.status(500).json({ message: error, data: null, ok: false })
   }
@@ -88,7 +140,7 @@ export const blockUser = async (req: Request, res: Response) => {
 
     const blocked = user.blocked
 
-    // Check if user already has blocked the userToBeBlocked
+    // Check if user already has blocked the userToBeBlocked.
     // if a userToBeBlocked's username has a match in the blocked arr, return true. Otherwise, return false.
     const userAlreadyBlocked = blocked.some(
       (u) => u.username === userToBeBlocked.username
@@ -101,6 +153,7 @@ export const blockUser = async (req: Request, res: Response) => {
       })
     }
 
+    // Add userToBeBlocked in the blocked property of the user
     blocked.push(userToBeBlocked)
     user.blocked = blocked
     await user.save()
