@@ -174,7 +174,7 @@ export const blockUser = async (req: Request, res: Response) => {
     )
     if (userAlreadyBlocked) {
       return res.status(404).json({
-        message: "Friend is already blocked!",
+        message: "User is already blocked!",
         data: userToBeBlocked,
         ok: false,
       })
