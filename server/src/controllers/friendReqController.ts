@@ -40,22 +40,27 @@ export const addFriend = async (req: Request, res: Response) => {
     // Check if user already has a friend-relationship with the friend
     // if a friend's username has a match in the relationships arr, return true. Otherwise, return false.
     const friendAlreadyExists = relationships.some(
-      (f) => f.username === friend.username
+      (username) => username === friend.username
     )
+
     if (friendAlreadyExists) {
-      return res
-        .status(404)
-        .json({ message: "Friend is already added!", data: friend, ok: false })
+      return res.status(404).json({
+        message: "Friend is already added!",
+        data: friend.username,
+        ok: false,
+      })
     }
 
     // Add friend to user's relationships
-    relationships.push(friend)
+    relationships.push(friend.username)
     user.relationships = relationships
     await user.save()
 
-    res
-      .status(200)
-      .json({ message: "Friend successfully added!", data: friend, ok: true })
+    res.status(200).json({
+      message: "Friend successfully added!",
+      data: friend.username,
+      ok: true,
+    })
   } catch (error) {
     return res.status(500).json({ message: error, data: null, ok: false })
   }
@@ -102,26 +107,30 @@ export const removeFriend = async (req: Request, res: Response) => {
     // Check if user already does not have a relationship with the friend.
     // if a friend's username has a match in the relationships arr, return true. Otherwise, return false.
     const areFriends = relationships.some(
-      (f) => f.username === friendToBeRemoved.username
+      (username) => username === friendToBeRemoved.username
     )
+
+    console.log(areFriends)
+    console.log(relationships)
+
     if (!areFriends) {
       return res.status(404).json({
         message: "Users are not already friends!",
-        data: friendToBeRemoved,
+        data: friendToBeRemoved.username,
         ok: false,
       })
     }
 
     // Remove friend from user's relationships by filtering the friend's username
     const filteredRelationships = relationships.filter(
-      (f) => f.username !== friendToBeRemoved.username
+      (username) => username !== friendToBeRemoved.username
     )
     user.relationships = filteredRelationships
     await user.save()
 
     res.status(200).json({
       message: "Friend successfully removed",
-      data: friendToBeRemoved,
+      data: friendToBeRemoved.username,
       ok: true,
     })
   } catch (error) {
@@ -170,24 +179,24 @@ export const blockUser = async (req: Request, res: Response) => {
     // Check if user already has blocked the userToBeBlocked.
     // if a userToBeBlocked's username has a match in the blocked arr, return true. Otherwise, return false.
     const userAlreadyBlocked = blocked.some(
-      (u) => u.username === userToBeBlocked.username
+      (username) => username === userToBeBlocked.username
     )
     if (userAlreadyBlocked) {
       return res.status(404).json({
         message: "User is already blocked!",
-        data: userToBeBlocked,
+        data: userToBeBlocked.username,
         ok: false,
       })
     }
 
     // Add userToBeBlocked in the blocked property of the user
-    blocked.push(userToBeBlocked)
+    blocked.push(userToBeBlocked.username)
     user.blocked = blocked
     await user.save()
 
     res.status(200).json({
       message: "User successfully blocked!",
-      data: userToBeBlocked,
+      data: userToBeBlocked.username,
       ok: true,
     })
   } catch (error) {
@@ -237,26 +246,26 @@ export const unblockUser = async (req: Request, res: Response) => {
     // Check if user has blocked the userToBeUnblocked.
     // if a userToBeUnblocked's username has a match in the blocked arr, return true. Otherwise, return false.
     const userAlreadyBlocked = blocked.some(
-      (u) => u.username === userToBeUnblocked.username
+      (username) => username === userToBeUnblocked.username
     )
     if (!userAlreadyBlocked) {
       return res.status(404).json({
         message: "User is already unblocked!",
-        data: userToBeUnblocked,
+        data: userToBeUnblocked.username,
         ok: false,
       })
     }
 
     // Remove userToBeUnblocked in the blocked property of the user
     const filteredBlocked = blocked.filter(
-      (u) => u.username !== userToBeUnblocked.username
+      (username) => username !== userToBeUnblocked.username
     )
     user.blocked = filteredBlocked
     await user.save()
 
     res.status(200).json({
       message: "User successfully unblocked!",
-      data: userToBeUnblocked,
+      data: userToBeUnblocked.username,
       ok: true,
     })
   } catch (error) {
