@@ -239,7 +239,7 @@ export const unblockUser = async (req: Request, res: Response) => {
     const userAlreadyBlocked = blocked.some(
       (u) => u.username === userToBeUnblocked.username
     )
-    if (userAlreadyBlocked) {
+    if (!userAlreadyBlocked) {
       return res.status(404).json({
         message: "User is already blocked!",
         data: userToBeUnblocked,
