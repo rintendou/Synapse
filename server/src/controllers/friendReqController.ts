@@ -194,3 +194,72 @@ export const blockUser = async (req: Request, res: Response) => {
     return res.status(500).json({ message: error, data: null, ok: false })
   }
 }
+
+export const unblockUser = async (req: Request, res: Response) => {
+  // Destucture the payload attached to the body and params
+  const { usernameToBeUnblocked } = req.body
+  const { username } = req.params
+
+  // Check if both usernames match
+  if (usernameToBeUnblocked === username) {
+    return res.status(400).json({
+      message: "Invalid Request!",
+      data: null,
+      ok: false,
+    })
+  }
+
+  // Check if payload data is complete
+  if (!usernameToBeUnblocked || !username) {
+    return res.status(400).json({
+      message:
+        "usernameToBeUnblocked property and username params are required!",
+      data: null,
+      ok: false,
+    })
+  }
+
+  try {
+    const userToBeUnblocked = await UserModel.findOne({
+      username: usernameToBeUnblocked,
+    })
+    const user = await UserModel.findOne({ username: username })
+
+    // Check if friend or user objects exist in the db
+    if (!userToBeUnblocked || !user) {
+      return res
+        .status(404)
+        .json({ message: "User does not exist!", data: null, ok: false })
+    }
+
+    const blocked = user.blocked
+
+    // Check if user already has unblocked the userToBeUnblocked.
+    // if a userToBeUnblocked's username has a match in the blocked arr, return true. Otherwise, return false.
+    const userAlreadyBlocked = blocked.some(
+      (u) => u.username === userToBeUnblocked.username
+    )
+    if (userAlreadyBlocked) {
+      return res.status(404).json({
+        message: "User is already blocked!",
+        data: userToBeUnblocked,
+        ok: false,
+      })
+    }
+
+    // Remove userToBeUnblocked in the blocked property of the user
+    const filteredBlocked = blocked.filter(
+      (u) => u.username !== userToBeUnblocked.username
+    )
+    user.blocked = filteredBlocked
+    await user.save()
+
+    res.status(200).json({
+      message: "User successfully unblocked!",
+      data: userToBeUnblocked,
+      ok: true,
+    })
+  } catch (error) {
+    return res.status(500).json({ message: error, data: null, ok: false })
+  }
+}
