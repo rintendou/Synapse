@@ -6,6 +6,15 @@ export const addFriend = async (req: Request, res: Response) => {
   const { friendUsername } = req.body
   const { username } = req.params
 
+  // Check if both usernames match
+  if (friendUsername === username) {
+    return res.status(400).json({
+      message: "Invalid Request!",
+      data: null,
+      ok: false,
+    })
+  }
+
   // Check if payload data is complete
   if (!friendUsername || !username) {
     return res.status(400).json({
@@ -57,6 +66,15 @@ export const removeFriend = async (req: Request, res: Response) => {
   const { friendUsername } = req.body
   const { username } = req.params
 
+  // Check if both usernames match
+  if (friendUsername === username) {
+    return res.status(400).json({
+      message: "Invalid Request!",
+      data: null,
+      ok: false,
+    })
+  }
+
   // Check if payload data is complete
   if (!friendUsername || !username) {
     return res.status(400).json({
@@ -102,7 +120,7 @@ export const removeFriend = async (req: Request, res: Response) => {
     await user.save()
 
     res.status(200).json({
-      message: "Friend successfully blocked",
+      message: "Friend successfully removed",
       data: friendToBeRemoved,
       ok: true,
     })
@@ -115,6 +133,15 @@ export const blockUser = async (req: Request, res: Response) => {
   // Destucture the payload attached to the body and params
   const { usernameToBeBlocked } = req.body
   const { username } = req.params
+
+  // Check if both usernames match
+  if (usernameToBeBlocked === username) {
+    return res.status(400).json({
+      message: "Invalid Request!",
+      data: null,
+      ok: false,
+    })
+  }
 
   // Check if payload data is complete
   if (!usernameToBeBlocked || !username) {
