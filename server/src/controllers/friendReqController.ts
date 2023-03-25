@@ -241,7 +241,7 @@ export const unblockUser = async (req: Request, res: Response) => {
     )
     if (!userAlreadyBlocked) {
       return res.status(404).json({
-        message: "User is already blocked!",
+        message: "User is already unblocked!",
         data: userToBeUnblocked,
         ok: false,
       })
