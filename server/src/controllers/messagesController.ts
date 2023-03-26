@@ -32,11 +32,15 @@ export const createMessage = async (req: Request, res: Response) => {
     !mongoose.Types.ObjectId.isValid(senderId)
   ) {
     return res.status(400).json({
-      message: "Invalid chatId or senderId",
+      message: "Invalid chatId or senderId format!",
       data: null,
       ok: false,
     })
   }
+
+  // Check if both users exist in the db before creating a message
+  // TODO: I first have to clarify if the data passed to the body is sufficient.
+  // I think we also have to specify a recipientId?
 
   const newMessage = new MessageModel({ chatId, senderId, text })
 
