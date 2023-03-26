@@ -15,10 +15,10 @@ export const createMessage = async (req: Request, res: Response) => {
     */
 
   // Destucture the payload attached to the body and params
-  const { chatId, sender, text } = req.body
+  const { chatId, senderId, text } = req.body
 
   // Check if payload data is complete
-  if (!chatId || !sender || !text) {
+  if (!chatId || !senderId || !text) {
     return res.status(400).json({
       message: "chatId, sender, and text properties are required!",
       data: null,
@@ -26,16 +26,19 @@ export const createMessage = async (req: Request, res: Response) => {
     })
   }
 
-  // Check if chatId is a valid ObjectId type
-  if (!mongoose.Types.ObjectId.isValid(chatId)) {
+  // Check if chatId and senderId are valid ObjectId types
+  if (
+    !mongoose.Types.ObjectId.isValid(chatId) ||
+    !mongoose.Types.ObjectId.isValid(senderId)
+  ) {
     return res.status(400).json({
-      message: "Invalid chatId!",
+      message: "Invalid chatId or senderId",
       data: null,
       ok: false,
     })
   }
 
-  const newMessage = new MessageModel({ chatId, sender, text })
+  const newMessage = new MessageModel({ chatId, senderId, text })
 
   try {
     const savedMessaged = await newMessage.save()
