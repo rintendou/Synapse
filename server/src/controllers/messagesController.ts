@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import mongoose from "mongoose"
 
 import MessageModel from "../models/Message"
 
@@ -20,6 +21,15 @@ export const createMessage = async (req: Request, res: Response) => {
   if (!chatId || !sender || !text) {
     return res.status(400).json({
       message: "chatId, sender, and text properties are required!",
+      data: null,
+      ok: false,
+    })
+  }
+
+  // Check if chatId is a valid ObjectId type
+  if (!mongoose.Types.ObjectId.isValid(chatId)) {
+    return res.status(400).json({
+      message: "Invalid chatId!",
       data: null,
       ok: false,
     })
@@ -51,6 +61,15 @@ export const getMessages = async (req: Request, res: Response) => {
   if (!chatId) {
     return res.status(400).json({
       message: "chatId params is required!",
+      data: null,
+      ok: false,
+    })
+  }
+
+  // Check if chatId is a valid ObjectId type
+  if (!mongoose.Types.ObjectId.isValid(chatId)) {
+    return res.status(400).json({
+      message: "Invalid chatId!",
       data: null,
       ok: false,
     })
