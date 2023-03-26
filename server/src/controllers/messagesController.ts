@@ -42,14 +42,26 @@ export const createMessage = async (req: Request, res: Response) => {
 export const getMessages = async (req: Request, res: Response) => {
   /* 
     Retreive all messages using a given chatId via the MessageModel.
-    */
+  */
+
+  // Destucture the payload attached to the body and params
+  const { chatId } = req.body
+
+  // Check if payload data is complete
+  if (!chatId) {
+    return res.status(400).json({
+      message: "chatId property is required!",
+      data: null,
+      ok: false,
+    })
+  }
 
   try {
     const allMessages = await MessageModel.find({
       chatId: req.params.chatId,
     })
     return res.status(200).json({
-      message: "All messages successfully created!",
+      message: "All messages successfully fetched!",
       data: allMessages,
       ok: true,
     })
