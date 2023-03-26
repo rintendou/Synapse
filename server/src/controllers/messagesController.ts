@@ -13,7 +13,19 @@ export const createMessage = async (req: Request, res: Response) => {
     }
     */
 
-  const newMessage = new MessageModel(req.body)
+  // Destucture the payload attached to the body and params
+  const { chatId, sender, text } = req.body
+
+  // Check if payload data is complete
+  if (!chatId || !sender || !text) {
+    return res.status(400).json({
+      message: "chatId, sender, and text properties are required!",
+      data: null,
+      ok: false,
+    })
+  }
+
+  const newMessage = new MessageModel({ chatId, sender, text })
 
   try {
     const savedMessaged = await newMessage.save()
