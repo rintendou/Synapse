@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import mongoose from "mongoose"
 
 import MessageModel from "../models/Message"
 
@@ -13,7 +14,35 @@ export const createMessage = async (req: Request, res: Response) => {
     }
     */
 
-  const newMessage = new MessageModel(req.body)
+  // Destucture the payload attached to the body and params
+  const { chatId, senderId, text } = req.body
+
+  // Check if payload data is complete
+  if (!chatId || !senderId || !text) {
+    return res.status(400).json({
+      message: "chatId, sender, and text properties are required!",
+      data: null,
+      ok: false,
+    })
+  }
+
+  // Check if chatId and senderId are valid ObjectId types
+  if (
+    !mongoose.Types.ObjectId.isValid(chatId) ||
+    !mongoose.Types.ObjectId.isValid(senderId)
+  ) {
+    return res.status(400).json({
+      message: "Invalid chatId or senderId format!",
+      data: null,
+      ok: false,
+    })
+  }
+
+  // Check if both users exist in the db before creating a message
+  // TODO: I first have to clarify if the data passed to the body is sufficient.
+  // I think we also have to specify a recipientId?
+
+  const newMessage = new MessageModel({ chatId, senderId, text })
 
   try {
     const savedMessaged = await newMessage.save()
@@ -30,14 +59,35 @@ export const createMessage = async (req: Request, res: Response) => {
 export const getMessages = async (req: Request, res: Response) => {
   /* 
     Retreive all messages using a given chatId via the MessageModel.
-    */
+  */
+
+  // Destucture the payload attached to the body and params
+  const { chatId } = req.params
+
+  // Check if payload data is complete
+  if (!chatId) {
+    return res.status(400).json({
+      message: "chatId params is required!",
+      data: null,
+      ok: false,
+    })
+  }
+
+  // Check if chatId is a valid ObjectId type
+  if (!mongoose.Types.ObjectId.isValid(chatId)) {
+    return res.status(400).json({
+      message: "Invalid chatId!",
+      data: null,
+      ok: false,
+    })
+  }
 
   try {
     const allMessages = await MessageModel.find({
-      chatId: req.params.chatId,
+      chatId: chatId,
     })
     return res.status(200).json({
-      message: "All messages successfully created!",
+      message: "All messages successfully fetched!",
       data: allMessages,
       ok: true,
     })
