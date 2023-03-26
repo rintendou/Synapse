@@ -19,11 +19,16 @@ function App() {
       <Header />
       <Body>
         <Routes>
+          {/*  Unprotected Routes */}
           <Route path="/" element={<LandingPage />} />
-          <Route path="/app" element={<Application />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dev" element={<Dev />} />
+
+          {/* Protected Routes */}
+          <Route path="/app" element={<Application />} />
+
+          {/* Catch-All Route */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Body>
