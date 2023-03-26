@@ -45,12 +45,12 @@ export const getMessages = async (req: Request, res: Response) => {
   */
 
   // Destucture the payload attached to the body and params
-  const { chatId } = req.body
+  const { chatId } = req.params
 
   // Check if payload data is complete
   if (!chatId) {
     return res.status(400).json({
-      message: "chatId property is required!",
+      message: "chatId params is required!",
       data: null,
       ok: false,
     })
@@ -58,7 +58,7 @@ export const getMessages = async (req: Request, res: Response) => {
 
   try {
     const allMessages = await MessageModel.find({
-      chatId: req.params.chatId,
+      chatId: chatId,
     })
     return res.status(200).json({
       message: "All messages successfully fetched!",
