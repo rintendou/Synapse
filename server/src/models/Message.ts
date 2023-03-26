@@ -10,7 +10,7 @@ const MessageSchema = new Schema(
     chatId: {
       type: String,
     },
-    sender: {
+    senderId: {
       type: String,
     },
     text: {
