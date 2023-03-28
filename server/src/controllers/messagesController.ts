@@ -40,7 +40,7 @@ export const createMessage = async (req: Request, res: Response) => {
 
   // Check if both users exist in the db before creating a message
   // TODO: I first have to clarify if the data passed to the body is sufficient.
-  // I think we also have to specify a recipientId?
+  // I think we also have to specify a recipientId? I may have to study the models involved here
 
   const newMessage = new MessageModel({ chatId, senderId, text })
 
